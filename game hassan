@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aventuras en el Mundo JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      margin-top: 50px;
+    }
+    header {
+      text-align: center;
+    }
+    .level {
+      margin-top: 20px;
+    }
+    .challenge {
+      margin-bottom: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 10px;
+      font-family: monospace;
+      padding: 10px;
+    }
+    button {
+      display: block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #e9ecef;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Aventuras en el Mundo JavaScript</h1>
+      <p>¡Bienvenido a tu primera aventura en el mundo de JavaScript!</p>
+    </header>
+    <section id="level1" class="level">
+      <h2>Nivel 1: Introducción a JavaScript</h2>
+      <div class="challenge">
+        <p>Desafío 1: Escribe tu primer "Hola, Mundo".</p>
+        <textarea id="code" placeholder="Escribe tu código aquí..."></textarea>
+        <button id="runCode">Ejecutar Código</button>
+      </div>
+      <div id="output"></div>
+    </section>
+  </div>
+  <script>
+    document.getElementById('runCode').addEventListener('click', function() {
+      let code = document.getElementById('code').value;
+      let outputDiv = document.getElementById('output');
+
+      try {
+        // Clear previous output
+        outputDiv.innerHTML = '';
+
+        // Create a new script element
+        let script = document.createElement('script');
+        script.innerHTML = code;
+        
+        // Append the script to the output div
+        outputDiv.appendChild(script);
+
+        // If code contains console.log, redirect output to outputDiv
+        if (code.includes('console.log')) {
+          let consoleOutput = '';
+          let originalConsoleLog = console.log;
+          console.log = function(message) {
+            consoleOutput += message + '<br>';
+          };
+          eval(code);
+          console.log = originalConsoleLog;
+          outputDiv.innerHTML = consoleOutput;
+        }
+      } catch (e) {
+        outputDiv.innerHTML = 'Error: ' + e.message;
+      }
+    });
+  </script>
+</body>
+</html>
